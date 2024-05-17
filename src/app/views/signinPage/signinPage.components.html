@@ -1,0 +1,17 @@
+<div class="form-container">
+  <form class="form" (submit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">USERNAME</label>
+      <input type="text" [(ngModel)]="loginby.username" name="username" id="username" required>
+    </div>
+    <div class="form-group">
+      <label for="password">PASSWORD</label>
+      <input type="password" [(ngModel)]="loginby.password" name="password" id="password" required>
+    </div>
+    <div class="form-group">
+      <label for="password">PIN 4 DIGITS</label>
+      <input type="text" [(ngModel)]="loginby.pin" name="pin" id="pin" required>
+    </div>
+    <button type="submit" class="form-login-btn">LOGIN</button>
+  </form>
+</div>

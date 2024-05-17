@@ -1,0 +1,39 @@
+
+<div class=" justify-content-center container mx-auto">
+
+<table class="table">
+  <thead>
+    <tr class="text-center table-success ">
+      <th scope="col" >#</th>
+      <th>ชื่อโปรเจค</th>
+      <th>รายละเอียด</th>
+      <th>วันเริ่มต้น</th>
+      <th>วันสิ้นสุด</th>
+      <th>วันที่สร้าง</th>
+      <th>แก้ไข</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr *ngFor="let data of Allprojects; let i = index" class="text-center ">
+
+      <th scope="row">{{data.id}}</th>
+      <td class="addhightable"><div class="d-flex justify-content-center align-items-center h-100">{{data.name}}</div></td>
+      <td class="addhightable"><div class="d-flex justify-content-center align-items-center h-100">{{data.detail}}</div></td>
+      <td class="addhightable"><div class="d-flex justify-content-center align-items-center h-100">{{data.startdate}}</div></td>
+      <td class="addhightable" ><div class="d-flex justify-content-center align-items-center h-100">{{data.enddate}}</div></td>
+      
+      <td class="addhightable"><div class="d-flex justify-content-center align-items-center h-100">{{data.createDate }}</div></td>
+      <td >
+        <div class="d-flex gap-2 justify-content-center ">
+          <button [routerLink]="['../updateproducts', data.id]"class="btn btn-warning btn-sm text-warning">แก้ไขสินค้า</button>
+          <button  class="btn btn-danger btn-sm text-danger">ลบสินค้า</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button [routerLink]="['../projectcreate']"class="btn btn-success btn-sm text-success">สร้างสินค้าใหม่</button>
+
+</div>
