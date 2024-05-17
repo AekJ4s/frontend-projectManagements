@@ -1,64 +1,4 @@
-// import { Component } from '@angular/core';
-// import { FormsModule } from '@angular/forms';
-// import { CommonModule, NgFor } from '@angular/common';
-// import { Router } from '@angular/router';
-// import Projects from '../../models/project';
-// import { ProjectService } from '../../services/Projects.service';
-// import { ActivityService } from '../../services/Activity.service';
-// import Activity from '../../models/activity';
 
-// @Component({
-//   selector: 'projectCreate-component',
-//   standalone: true,
-//   templateUrl: './projectCreate.components.html',
-//   styleUrls: ['./projectCreate.components.css'],
-//   imports: [FormsModule, NgFor, CommonModule],
-// })
-// export class ProjectCreateComponent {
-//   project: Projects;
-//   childAdded: number[] = [];
-//   constructor(
-//     private projectService: ProjectService,
-//     private actService: ActivityService,
-//     private router: Router
-//   ) {
-//     this.project = new Projects();
-//     const a = new Activity();
-//     this.project.activity = [];
-//     // กำหนดค่าเริ่มต้นให้ activity เป็นอาเรย์ว่าง
-//     this.project.activity.push(a);
-//   }
-
-//   // กดครั้ง 1 สร้างลูก
-//   // กดครั้ง 2 สร้างลูกในลูก
-
-//   addChildActivity(parent : Activity) {
-//         const childActivity = new Activity(); // เพิ่ม Activities ใหม่
-//         childActivity.lv = parent.lv + 1;
-//         childActivity.project = this.project; // กำหนดโปรเจกต์ให้กับ Activities ใหม่
-//         parent.inverseActivityHeader.push(childActivity) ; // ยัด Activities ใหม่ให้กับตัว แม่
-//         console.log(childActivity.lv)
-//   }
-//   addParentActivity() {
-//     const newActivity = new Activity(); // ไม่ต้องส่งอาร์กิวเมนต์เข้าไปใน constructor
-//     newActivity.name = `Activity ${this.project.activity.length + 1}`;
-//     newActivity.id = this.project.id
-//     newActivity.activityHeader = null; // กำหนดให้เป็น null หรือตามความเหมาะสม
-//     newActivity.project = this.project; // กำหนดโปรเจกต์ให้กับกิจกรรมใหม่
-//     console.log(newActivity)
-//     this.project.activity.push(newActivity);
-//   }
-
-//   deleteAct(index: number) {
-//     this.project.activity.splice(index); // ลบกิจกรรมที่ตำแหน่งที่ระบุ
-//   }
-
-//   onSubmit() {}
-
-//   consoleSomething() {
-//     console.log(this.project);
-//   }
-// }
 
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
@@ -77,7 +17,6 @@ import { Router } from '@angular/router';
 })
 export class ProjectCreateComponent {
   project = new Projects();
-  fixproject = new Projects();
   constructor(private projectService: ProjectService, private router: Router) {}
 
   addParentActivity() {
