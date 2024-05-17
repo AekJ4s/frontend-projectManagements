@@ -1,6 +1,6 @@
 
 
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import Activity from '../../models/activity';
@@ -9,11 +9,11 @@ import { ProjectService } from '../../services/Projects.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-project-create',
+  selector: 'projectCreate',
   standalone: true,
   templateUrl: './projectCreate.components.html',
   styleUrls: ['./projectCreate.components.css'],
-  imports: [FormsModule, NgFor, CommonModule],
+  imports: [FormsModule, CommonModule],
 })
 export class ProjectCreateComponent {
   project = new Projects();
@@ -58,7 +58,7 @@ export class ProjectCreateComponent {
  // ListA.forEach(A => {
     //   console.log(A);
     // }); มาทำต่อพรุ่งนี้จ้า ตัวอย่างจ้า
-  fixCircular(activity : Activity[] = []){
+  fixCircular(activity : Activity[]){
     activity.forEach(data => {
         data.inverseActivityHeader.forEach(childdata => {
           childdata.activityHeader = null;

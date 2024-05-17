@@ -4,6 +4,73 @@
 *:after {
   box-sizing: border-box;
 }
+
+/* DELETE BUTTON */
+
+
+.buttondelete {
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #e62222;
+  text-align: center;
+}
+ 
+ .buttondelete, .buttondelete span {
+  transition: 200ms;
+ }
+ 
+ .buttondelete .text {
+  transform: translateX(25px);
+  color: white;
+  font-weight: bold;
+ }
+ 
+ .buttondelete .icon {
+  position: absolute;
+  transform: translateX(155px);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+ 
+ .buttondelete svg {
+  width: 15px;
+  fill: #eee;
+ }
+ 
+ .buttondelete:hover {
+  background: #ff3636;
+ }
+ 
+ .buttondelete:hover .text {
+  color: transparent;
+ }
+ 
+ .buttondelete:hover .icon {
+  width: 200px;
+  border-left: none;
+  transform: translateX(0);
+ }
+ 
+ .buttondelete:focus {
+  outline: none;
+ }
+ 
+ .buttondelete:active .icon svg {
+  transform: scale(0.8);
+ }
+
+
+/* DELETE BUTTON END */
 body {
   padding: 1em;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -49,7 +116,6 @@ select {
   display: inline-block;
   width: 50%;
   text-align: center;
-  float: left;
   border-radius: 0;
 }
 input[type="radio"] + label:first-of-type {

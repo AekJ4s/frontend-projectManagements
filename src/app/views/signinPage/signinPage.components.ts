@@ -1,16 +1,16 @@
 import { Component } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { NgFor } from "@angular/common";
-import { RouterModule } from "@angular/router";
-import { Router } from "@angular/router";
-import { LoginServices } from "../../services/Login.service";
 import User from "../../models/user";
+import { LoginServices } from "../../services/Login.service";
+import { Router } from "@angular/router";
+import { FormsModule } from "@angular/forms";
+import { ProjectListComponent } from "../projectlist/projectList.components";
+
 @Component({
-    selector: 'signinPage-component',
+    selector: 'signinPage',
     standalone: true,
     templateUrl: './signinPage.components.html',
     styleUrl: './signinPage.components.css',
-    imports: [RouterModule,FormsModule,NgFor]
+    imports: [ProjectListComponent,FormsModule]
 })
 
 export class SigninPageComponent{
@@ -34,5 +34,4 @@ export class SigninPageComponent{
             }
         );
     }
-
 }

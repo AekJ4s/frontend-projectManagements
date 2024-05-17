@@ -1,4 +1,4 @@
-import { ApplicationModule, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,6 +6,9 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
 import { SigninPageComponent } from './views/signinPage/signinPage.components';
 import { ProjectListComponent } from './views/projectlist/projectList.components';
+// import { SigninPageComponent } from './views/signinPage/signinPage.components';
+// import { ProjectListComponent } from './views/projectlist/projectList.components';
+// import { ProjectUpdateComponents } from './views/projectUpdate/projectUpdate.components';
 
 @Component({
   selector: 'app-root',

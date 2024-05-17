@@ -1,22 +1,22 @@
+import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
-import { RouterModule, RouterOutlet } from '@angular/router';
-import { CommonModule, NgFor } from "@angular/common";
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from "@angular/forms";
+import { Router, RouterModule, RouterOutlet } from "@angular/router";
+import Projects from "../../models/project";
 import { ProjectService } from "../../services/Projects.service";
-import projects from "../../models/project";
-import { Router } from "express";
+
 @Component({
-    selector: 'projectList-component',
+    selector: 'projectList',
     standalone: true,
     templateUrl: './projectList.components.html',
     styleUrl: './projectList.components.css',
-    imports: [RouterModule,CommonModule,RouterModule,RouterOutlet,FormsModule,NgFor]
+    imports: [CommonModule,RouterModule,RouterOutlet,FormsModule]
 })
 
 export class ProjectListComponent {
-    Allprojects : projects[] = []
+    Allprojects : Projects[] = []
     projectID : any 
-    constructor(private projectService: ProjectService) { }
+    constructor(private projectService: ProjectService,private router: Router) { }
     
     ngOnInit() {
         this.projectService.GetAll().subscribe(
@@ -29,21 +29,20 @@ export class ProjectListComponent {
             }
         );
     }
-    
+
+    deleteProject(id : number | string) {
+        this.projectService.Delete(id).subscribe(
+          (result) => {
+            alert("Project deleted successfully");
+            this.router.navigate(['projectlist']);
+            window.location.reload();
+          },(error) => {
+            console.error("Can't delete this project");
+            alert("some thing error"+error);
+          }
+        )
+        }
 
     
-
-      // onEdit(data: number) {
-      //   this.productsService.PUT(data).subscribe(
-      //     () => {
-      //       console.log(data)
-      //       window.location.reload();
-      //     },
-      //     (error) => {
-      //       console.error("เกิดข้อผิดพลาดในการลบข้อมูล:", error);
-      //     }
-      //   );
-      // }
-  
     
 }
