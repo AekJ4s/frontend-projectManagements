@@ -11,12 +11,12 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'projectCreate',
   standalone: true,
-  templateUrl: './projectCreate.components.html',
-  styleUrls: ['./projectCreate.components.css'],
+  templateUrl: './uploadFile.components.html',
+  styleUrls: ['./uploadFile.components.css'],
   imports: [  FormsModule, CommonModule],
   
 })
-export class ProjectCreateComponent {
+export class uploadFile {
   project = new Projects();
   userId : number = 0 ;
   userName : string | null = '';

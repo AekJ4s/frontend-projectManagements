@@ -1,4 +1,4 @@
-import { CommonModule} from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import Activity from '../../models/activity';
@@ -13,39 +13,92 @@ import { ProjectListComponent } from '../projectlist/projectList.components';
   standalone: true,
   templateUrl: './projectUpdate.components.html',
   styleUrls: ['./projectUpdate.components.css'],
-  imports: [ProjectListComponent,FormsModule, CommonModule],
+  imports: [ProjectListComponent, FormsModule, CommonModule],
+  providers: [DatePipe],
 })
 export class ProjectUpdateComponents {
   projectId: number | null = null;
   project = new Projects();
-  activity : Activity [] = [];
-  timenow = new Date()
+  activity: Activity[] = [];
+  timenow = new Date();
+  datafromController = [];
 
   constructor(
     private projectService: ProjectService,
     private activityService: ActivityService,
     private route: ActivatedRoute,
-    private router : Router
+    private router: Router,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit() {
-    if(this.project.id != null && this.project.isDelete != true){
-    this.route.params.subscribe((params) => {
-      this.project.id = +params['id'];
-    })
-    this.projectService.GetProjectID(this.project.id).subscribe(
+    if (this.project.id != null && this.project.isDelete != true) {
+      this.route.params.subscribe((params) => {
+        this.project.id = +params['id'];
+      });
+      this.projectService.GetProjectID(this.project.id).subscribe(
         (result) => {
-          this.project = result.data
-          console.log("RECEIVE BY DATABASE :" , this.project)
+          let data = result.data
+          if (data) {
+            this.project = {
+              ...data,
+              createDate: this.datePipe.transform(
+                new Date(data.createDate),
+                'yyyy-MM-dd',
+                'Asia/Bangkok'
+              ),
+              endDate: this.datePipe.transform(
+                new Date(data.endDate),
+                'yyyy-MM-dd',
+                'Asia/Bangkok'
+              ),
+              startDate: this.datePipe.transform(
+                new Date(data.startDate),
+                'yyyy-MM-dd',
+                'Asia/Bangkok'
+              ),
+              updateDate: this.datePipe.transform(
+                new Date(data.updateDate),
+                'yyyy-MM-dd',
+                'Asia/Bangkok'
+              ),
+            };
+            console.log(this.project);
+          } else {
+            console.error('Data is not available');
+          }
         },
         (error) => {
-          alert("Fail to request the data Because :   " + error.code + ":" + error.message)
-            console.error(error);
-        })
-  }
+          alert(
+            'Fail to request the data Because :   ' +
+              error.code +
+              ':' +
+              error.message
+          );
+          console.error(error);
+        }
+      );
+    }
+ 
 }
 
- 
+  //   this.projectService.GetProjectID(this.project.id).subscribe(
+  //     (result : Projects)=> {
+  //     this.project = result((project : any)=> ({
+  //       ...project,
+  //       createDate : this.datePipe.transform(new Date(project.createDate), 'shortDate','Asia/Bangkok'),
+  //       endDate : this.datePipe.transform(new Date(project.endDate), 'shortDate','Asia/Bangkok'),
+  //       startDate : this.datePipe.transform(new Date(project.startDate), 'shortDate','Asia/Bangkok'),
+  //       updateDate : this.datePipe.transform(new Date(project.updateDate), 'shortDate','Asia/Bangkok'),
+
+  //     }));
+  //   },
+  //   (error) => {
+  //     console.error(error);
+  //     }
+  //   );
+  // }
+
   addParentActivity() {
     const newActivity = new Activity(); // ไม่ต้องส่งอาร์กิวเมนต์เข้าไปใน constructor
     newActivity.activityHeader = null; // กำหนดให้เป็น null หรือตามความเหมาะสม
@@ -61,14 +114,13 @@ export class ProjectUpdateComponents {
     parent.inverseActivityHeader.push(childActivity); // ยัด Activities ใหม่ให้กับตัว แม่
   }
 
-  deleteInverseActivity(A:Activity) {
-      console.log("  INPUT  " ,  A);
-      A.inverseActivityHeader.forEach((B) => {
-            this.deleteInverseActivity(B);
-      });
-      A.isDeleted = true;
-      console.log(" OUTPUT : " , A ) ;
-      
+  deleteInverseActivity(A: Activity) {
+    console.log('  INPUT  ', A);
+    A.inverseActivityHeader.forEach((B) => {
+      this.deleteInverseActivity(B);
+    });
+    A.isDeleted = true;
+    console.log(' OUTPUT : ', A);
 
     // this.project.activities.splice
   }
@@ -81,8 +133,7 @@ export class ProjectUpdateComponents {
   }
 
   forfirsttd(level: number) {
-
-    return level >= 1 ? new Array(level-1): [];
+    return level >= 1 ? new Array(level - 1) : [];
   }
 
   forlasttd(level: number) {
@@ -92,9 +143,8 @@ export class ProjectUpdateComponents {
   //   console.log(A);
   // }); มาทำต่อพรุ่งนี้จ้า ตัวอย่างจ้า
 
-
-
-  fixCircular(activity: Activity[] = []) {   // แก้ปัญหา Circular Activity
+  fixCircular(activity: Activity[] = []) {
+    // แก้ปัญหา Circular Activity
     activity.forEach((data) => {
       data.inverseActivityHeader.forEach((childdata) => {
         childdata.activityHeader = null;
@@ -108,29 +158,29 @@ export class ProjectUpdateComponents {
     });
   }
 
-  deleteProject(id : number | string) {
-  this.projectService.Delete(id).subscribe(
-    (result) => {
-      alert("Project deleted successfully");
-      this.router.navigate(['projectlist']);
-    },(error) => {
-      console.error("Can't delete this project");
-      alert("some thing error"+error);
-    }
-  )
+  deleteProject(id: number | string) {
+    this.projectService.Delete(id).subscribe(
+      (result) => {
+        alert('Project deleted successfully');
+        this.router.navigate(['projectlist']);
+      },
+      (error) => {
+        console.error("Can't delete this project");
+        alert('some thing error' + error);
+      }
+    );
   }
   onSubmit() {
     this.fixCircular(this.project.activities);
     this.projectService.UpdateProjectRequest(this.project).subscribe(
       (result) => {
-        if (this.project.startdate == this.project.enddate) {
+        if (this.project.startDate == this.project.endDate) {
           alert('ห้ามวันเริ่มและวันสิ้นสุดโครงการเป็นวันเดียวกันครับ');
-        } else 
-        this.router.navigate(['projectlist']);
-        window.location.reload();
+        } else this.router.navigate(['projectlist']);
+       
       },
       (error) => {
-        console.error("Update Unsuccess",error);
+        console.error('Update Unsuccess', error);
       }
     );
   }

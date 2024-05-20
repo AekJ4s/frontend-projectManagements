@@ -15,18 +15,16 @@ import { ProjectListComponent } from "../projectlist/projectList.components";
 
 export class SigninPageComponent{
     loginby = new User();
+    isLoggedIn = false;
     constructor(private loginService: LoginServices, private router: Router) { }
     onSubmit(){
-        
-        // Login Process
-        // Get ID PASSWORD PIN FROM USER
-        // IF ID PASSWORD AND PIN CORRECT
-        // GEN TOKEN
-        console.log(this.loginby)
         this.loginService.Login(this.loginby).subscribe(
-            (result:any) => {
-                localStorage.setItem('Bearer', result.data);
-                console.log('Bearer', result.data);
+            (result) => {
+                console.log('Bearer => ', result.data.BearerToken , 'username => ', result.data.UserName);
+                localStorage.setItem('Bearer', result.data.BearerToken);
+                localStorage.setItem('UserId', result.data.UserId);
+                localStorage.setItem('Username', result.data.UserName);
+                console.log("USERNAME = > ", result.data.UserName , "USERID = > " , result.data.UserId)
                 this.router.navigate(['projectlist']);
             },
             (error:any) => {
@@ -34,4 +32,6 @@ export class SigninPageComponent{
             }
         );
     }
+
+  
 }

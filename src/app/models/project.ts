@@ -6,11 +6,11 @@ export default class Projects {
     ownerid = 0
     name = ""
     detail = ""
-    startdate = new Date()
-    enddate = new Date()
+    startDate = new Date()
+    endDate = new Date()
     createDate = new Date()
     updateDate = new Date()
     isDelete = false
     activities:Activity[] = []
-
+    
 }
