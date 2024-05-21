@@ -1,8 +1,8 @@
 
-export default class MyFiles {
+export default class mFile {
     id = 0
-    filename = ""
-    filepath = ""
+    fileName = ""
+    filePath = ""
     createDate = new Date()
     updateDate = new Date()
     isDeleted = false

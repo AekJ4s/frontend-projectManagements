@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
 import { SigninPageComponent } from './views/signinPage/signinPage.components';
 import { ProjectListComponent } from './views/projectlist/projectList.components';
+import { UploadFileComponent } from './views/uploadfile/uploadFile.components';
 // import { SigninPageComponent } from './views/signinPage/signinPage.components';
 // import { ProjectListComponent } from './views/projectlist/projectList.components';
 // import { ProjectUpdateComponents } from './views/projectUpdate/projectUpdate.components';
@@ -13,7 +14,7 @@ import { ProjectListComponent } from './views/projectlist/projectList.components
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ProjectListComponent,SigninPageComponent,CommonModule, RouterModule, FormsModule, CommonModule, RouterOutlet],
+  imports: [UploadFileComponent,ProjectListComponent,SigninPageComponent,CommonModule, RouterModule, FormsModule, CommonModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

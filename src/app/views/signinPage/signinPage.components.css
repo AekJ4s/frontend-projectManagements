@@ -1,10 +1,11 @@
 .form-container {
-  width: 400px;
+  width: 500px;
+  height: 500px;
   background: linear-gradient(#21212178, #212121) padding-box,
-              linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
-  border: 2px solid transparent;
+              linear-gradient(145deg, transparent 35%,#f0a500, #ff0000) border-box;
+  border: 5px solid transparent;
   padding: 32px 24px;
-  font-size: 14px;
+  font-size: 16px;
   font-family: inherit;
   color: white;
   display: flex;
@@ -13,7 +14,8 @@
   box-sizing: border-box;
   border-radius: 16px;
   background-size: 200% 100%;
-  animation: gradient 5s ease infinite;
+  animation: gradient 2s ease infinite;
+  justify-content: center;
 }
 
 @keyframes gradient {
@@ -77,7 +79,7 @@
 }
 
 .form-container .form-group input::placeholder {
-  opacity: 0.5;
+  opacity: 0.2;
 }
 
 .form-container .form-group input:focus {
@@ -89,8 +91,8 @@
   outline: none;
   border-color: #e81cff;
 }
-
-.form-container .form-login-btn {
+/* ปุ่มมมมม */
+.form-container .form-login-btn { 
   width: 40%;
   margin: auto; /* เพิ่มบรรทัดนี้ */
   display: flex;

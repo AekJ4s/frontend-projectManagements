@@ -82,23 +82,6 @@ export class ProjectUpdateComponents {
  
 }
 
-  //   this.projectService.GetProjectID(this.project.id).subscribe(
-  //     (result : Projects)=> {
-  //     this.project = result((project : any)=> ({
-  //       ...project,
-  //       createDate : this.datePipe.transform(new Date(project.createDate), 'shortDate','Asia/Bangkok'),
-  //       endDate : this.datePipe.transform(new Date(project.endDate), 'shortDate','Asia/Bangkok'),
-  //       startDate : this.datePipe.transform(new Date(project.startDate), 'shortDate','Asia/Bangkok'),
-  //       updateDate : this.datePipe.transform(new Date(project.updateDate), 'shortDate','Asia/Bangkok'),
-
-  //     }));
-  //   },
-  //   (error) => {
-  //     console.error(error);
-  //     }
-  //   );
-  // }
-
   addParentActivity() {
     const newActivity = new Activity(); // ไม่ต้องส่งอาร์กิวเมนต์เข้าไปใน constructor
     newActivity.activityHeader = null; // กำหนดให้เป็น null หรือตามความเหมาะสม
