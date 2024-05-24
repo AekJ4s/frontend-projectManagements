@@ -4,12 +4,15 @@ import projects from "../models/project";
 import Projects from "../models/project";
 import { Observable } from "rxjs";
 import Response from "../models/response";
+import ProjectWithFile from "../models/projectwithfile";
 
 @Injectable({
     providedIn: 'root',
 })
 export class ProjectService {
     private readonly baseURL = 'http://localhost:5157/projects';
+    private readonly uploadURL = 'http://localhost:5157/FileUpload';
+    private readonly projectfile = 'http://localhost:5157/'
     private accessToken = localStorage.getItem('Bearer');
     private tokenType = `Bearer ${this.accessToken}`;
     constructor(private httpClient: HttpClient) {}
@@ -42,18 +45,31 @@ export class ProjectService {
       return this.httpClient.put<Response>(`${this.baseURL}`,body,options)  
     }
 
-    Create(project : Projects) {
-        
-        let body = JSON.stringify(project)
-        
-        const headers = new HttpHeaders({
+    Create(project: Projects, files: File[]): Observable<any> {
+      const formData: FormData = new FormData();
+      formData.append('ProjectCreate.Name', project.name);
+      formData.append('ProjectCreate.OwnerId', project.ownerid.toString());
+      formData.append('ProjectCreate.Detail', project.detail);
+      formData.append('ProjectCreate.StartDate', project.startDate.toString());
+      formData.append('ProjectCreate.EndDate',  project.endDate.toString());
+      
+      formData.append('ProjectCreate.Activities', JSON.stringify(project.activities));
+      console.log(JSON.stringify(project.activities));
+      formData.append('ProjectCreate.ProjectWithFile', project.projectWithFiles.toString());
+
+      
+      files.forEach((file) => {
+          formData.append('Files', file , file.name);
+      });
+  
+      const headers = new HttpHeaders({
           'Authorization': this.tokenType,
-          'Content-Type': 'application/json'
-        });
-        const options = { headers: headers };
-        console.log(body);
-        return this.httpClient.post<projects[]>(`${this.baseURL}/CreateProject`,body,options);
-      }
+      });
+  
+      const options = { headers: headers };
+      return this.httpClient.post<any>(`${this.baseURL}/CreateProject`, formData, options);
+  }
+  
 
       Delete(id : number|string){
       const headers = new HttpHeaders({
@@ -63,9 +79,20 @@ export class ProjectService {
       const options = { headers: headers };
       return this.httpClient.delete<projects[]>(`${this.baseURL}?id=${id}`,options);
     }
-    }
+    // UPLOAD FILE PART
+     GetProjectFiles(id : number|string): Observable<Response>{
+      const headers = new HttpHeaders({
+        'Authorization': this.tokenType,
+      });
+      const options = { headers: headers };
+      return this.httpClient.get<Response>(`${this.projectfile}/GetBy/${id}`,options);
+     }
 
- 
-
+     DownloadFile(id : number|string): Observable<Blob>{
+      const url = `http://localhost:5157/FileDownload/DownloadFile/${id}`;
+      return this.httpClient.get(url, { responseType: 'blob' });
+     }
+  }
+    // ***END HERE
     // (method) HttpClient.get<projects[]>(url: string, options?: {
     // headers?: HttpHeaders | {[header: string]: string | string[]; } | undefined;

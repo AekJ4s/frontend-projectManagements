@@ -7,6 +7,9 @@ import { ProjectService } from '../../services/Projects.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActivityService } from '../../services/Activity.service';
 import { ProjectListComponent } from '../projectlist/projectList.components';
+import mFile from '../../models/file';
+import { Observable } from 'rxjs';
+import ProjectWithFile from '../../models/projectwithfile';
 
 @Component({
   selector: 'projectUpdate',
@@ -22,24 +25,27 @@ export class ProjectUpdateComponents {
   activity: Activity[] = [];
   timenow = new Date();
   datafromController = [];
+  files : File[] = [];
+  fileDetails : any []= []
+  href = null ;
 
   constructor(
     private projectService: ProjectService,
-    private activityService: ActivityService,
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe
   ) {}
 
   ngOnInit() {
-    if (this.project.id != null && this.project.isDelete != true) {
+    if (this.project.id != null && this.project.isDeleted != true) {
       this.route.params.subscribe((params) => {
         this.project.id = +params['id'];
       });
       this.projectService.GetProjectID(this.project.id).subscribe(
         (result) => {
-          let data = result.data
-          if (data) {
+          console.log(result);
+          let data = result.data.project;
+          if (data!= null) {
             this.project = {
               ...data,
               createDate: this.datePipe.transform(
@@ -63,6 +69,7 @@ export class ProjectUpdateComponents {
                 'Asia/Bangkok'
               ),
             };
+            
             console.log(this.project);
           } else {
             console.error('Data is not available');
@@ -79,8 +86,8 @@ export class ProjectUpdateComponents {
         }
       );
     }
- 
-}
+    console.log(this.project)
+  }
 
   addParentActivity() {
     const newActivity = new Activity(); // ไม่ต้องส่งอาร์กิวเมนต์เข้าไปใน constructor
@@ -98,14 +105,15 @@ export class ProjectUpdateComponents {
   }
 
   deleteInverseActivity(A: Activity) {
-    console.log('  INPUT  ', A);
     A.inverseActivityHeader.forEach((B) => {
       this.deleteInverseActivity(B);
     });
     A.isDeleted = true;
-    console.log(' OUTPUT : ', A);
-
     // this.project.activities.splice
+  }
+
+  deleteProjectWithFile(F : ProjectWithFile){
+    F.isDeleted = true;
   }
   getColSpanForLevel(level: number): number {
     // กำหนดจำนวนคอลัมน์ที่ต้องการให้กับแต่ละระดับของกิจกรรม
@@ -141,6 +149,24 @@ export class ProjectUpdateComponents {
     });
   }
 
+  onDownload(id: number | string,name : string | undefined) {
+    console.log("send id" + id + " send name " + name)
+    this.projectService.DownloadFile(id).subscribe(response => {
+      const blob = new Blob([response], { type: response.type });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${name}`;  // ตั้งชื่อไฟล์ที่ต้องการดาวน์โหลด
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    });
+    this.router.navigate([`projects/GetBy/${id}`]);
+
+  }
+
+  
   deleteProject(id: number | string) {
     this.projectService.Delete(id).subscribe(
       (result) => {
@@ -159,8 +185,10 @@ export class ProjectUpdateComponents {
       (result) => {
         if (this.project.startDate == this.project.endDate) {
           alert('ห้ามวันเริ่มและวันสิ้นสุดโครงการเป็นวันเดียวกันครับ');
-        } else this.router.navigate(['projectlist']);
-       
+          console.log("After Submit" + result.data)
+        } else 
+        alert('Update Successfully')
+        this.router.navigate(['projectlist']);
       },
       (error) => {
         console.error('Update Unsuccess', error);

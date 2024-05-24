@@ -5,6 +5,238 @@
   box-sizing: border-box;
 }
 
+
+
+/* BUTTON DOWLOAD */
+
+.BtnDownload {
+  width: 55px;
+  height: 55px;
+  border: none;
+  border-radius: 50%;
+  /* พื้นหลังปุ่ม */
+  background-color: #f0a500;  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition-duration: .3s;
+  border: 3px solid rgb(255, 201, 201);
+
+  /* พื้นหลังปุ่ม */
+}
+
+.svgIconDownload {
+  /* ลูกศร */
+  fill: #000000;
+}
+
+.icon2Download {
+  width: 18px;
+  height: 5px;
+  border-bottom: 2px #000000;
+  border-left: 2px #000000;
+  border-right: 2px #000000;
+}
+
+.tooltipDownload {
+  position: absolute;
+  right: -105px;
+  opacity: 0;
+  background-color: rgb(12, 12, 12);
+  color:  #f0a500;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition-duration: .2s;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}
+
+.tooltipDownload::before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: rgb(12, 12, 12);
+  background-size: 1000%;
+  background-position: center;
+  transform: rotate(45deg);
+  left: -5%;
+  transition-duration: .3s;
+}
+
+.BtnDownload:hover .tooltipDownload {
+  opacity: 1;
+  transition-duration: .3s;
+}
+
+.BtnDownload:hover {
+  background-color: rgb(0, 0, 0);
+  transition-duration: .3s;
+}
+
+.BtnDownload:hover .icon2Download {
+  border-bottom: 2px solid  #f0a500;
+  border-left: 2px solid  #f0a500;
+  border-right: 2px solid  #f0a500;
+}
+
+.BtnDownload:hover .svgIconDownload {
+  fill:  #f0a500;
+  animation: slide-in-top 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+
+/* END HERE */
+
+/* BIN BUTTON */
+
+.bin-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: rgb(255, 95, 95);
+  cursor: pointer;
+  border: 3px solid rgb(255, 201, 201);
+  transition-duration: 0.3s;
+}
+.bin-bottom {
+  width: 15px;
+}
+.bin-top {
+  width: 17px;
+  transform-origin: right;
+  transition-duration: 0.3s;
+}
+.bin-button:hover .bin-top {
+  transform: rotate(45deg);
+}
+.bin-button:hover {
+  background-color: rgb(255, 0, 0);
+}
+.bin-button:active {
+  transform: scale(0.9);
+}
+/* CARD FOR FILE */
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.bg-forfile {
+  color: #000000;
+  background-color: #b9b9b9;
+}
+
+.signature{
+  color:#f0a500 ;
+}
+.cardforfile {
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 2px 2px 10px #f0a500;
+  width: calc(33.333% - 20px); /* 3 cards per row with some margin */
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+.titleforfile {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.titleforfile span {
+  position: relative;
+  padding: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #f0a500;
+}
+
+.titleforfile span svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000000;
+  height: 1rem;
+}
+
+.titleforfile-text {
+  margin-left: 0.5rem;
+  color: #374151;
+  font-size: 18px;
+}
+
+.percentforfile {
+  margin-left: 0.5rem;
+  color: #02972f;
+  font-weight: 600;
+  display: flex;
+}
+
+.dataforfile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.dataforfile p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: #1F2937;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.dataforfile .rangeforfile {
+  position: relative;
+  background-color: #E5E7EB;
+  width: 100%;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.dataforfile .rangeforfile .fillforfile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #10B981;
+  width: 76%;
+  height: 100%;
+  border-radius: 0.25rem;
+}
+
+
+/* END HERE */
 /* DELETE BUTTON */
 
 
@@ -16,7 +248,7 @@
   align-items: center;
   background: red;
   border: none;
-  border-radius: 5px;
+  border-radius: 25px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #e62222;
   text-align: center;
@@ -238,12 +470,13 @@ select option {
   transition: all 0.35s ease-in-out;
 }
 .container {
-  max-width: 150em;
+  max-width: 90%;
   padding: 1em 3em 2em 3em;
   margin: 0em auto;
   background-color: #fff;
   border-radius: 4.2px;
-  box-shadow: 0px 3px 10px -2px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 5px #f0a500;
+
 }
 .row {
   zoom: 1;

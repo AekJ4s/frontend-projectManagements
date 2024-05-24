@@ -43,9 +43,7 @@ export class UploadFileComponent {
   }
 
   onSubmit() {
-    this.files.forEach(element => {
-    console.log("Files before submit:", element);
-    });
+    
     if (this.files.length > 0) {
       this.uploadService.UploadFile(this.files).subscribe(
         (result) => {

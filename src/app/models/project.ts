@@ -1,5 +1,5 @@
-import activity from "./activity"
 import Activity from "./activity"
+import ProjectWithFile from "./projectwithfile"
 
 export default class Projects {
     id = 0 
@@ -10,7 +10,8 @@ export default class Projects {
     endDate = new Date()
     createDate = new Date()
     updateDate = new Date()
-    isDelete = false
+    isDeleted = false ;
+    projectWithFiles:ProjectWithFile[] = [] 
     activities:Activity[] = []
     
 }
