@@ -6,12 +6,11 @@ body {
   max-width: auto;
   margin-left: auto;
   margin-right: auto;
-  
+  padding-bottom: 50px
 }
 
 h2 {
   font-size: 26px;
-  margin: 20px 0;
   text-align: center;
   small {
     font-size: 0.5em;
@@ -21,9 +20,9 @@ h2 {
 .responsive-table {
   li {
     border-radius: 15px;
-    padding: 25px;
+    padding: 15px;
     display: flex;
-    margin-bottom: 25px;
+    margin:50px
   }
   .table-header {
     background-color: #f2a50084;
@@ -58,9 +57,7 @@ h2 {
       display: block;
     }
     .col {
-      
       flex-basis: 100%;
-      
     }
     .col {
       display: flex;
@@ -574,15 +571,13 @@ body {
 }
 
 .cardcode {
-  width: 50%;
-  height: auto;
+  width: 75%;
+  justify-content: center;
   margin: 0 auto;
   background-color: #011522;
   border-radius: 35px;
   z-index: 1;
   box-shadow: 15px 15px 15px #000000;
-  margin-bottom: 30px;
-  
  }
  
  .tools {

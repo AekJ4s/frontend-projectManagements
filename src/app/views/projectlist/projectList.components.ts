@@ -67,18 +67,15 @@ export class ProjectListComponent implements OnInit {
 
     if (result) {
       // เมื่อผู้ใช้กด Yes (OK)
-      alert('Project Deleted');
       // เรียกใช้ฟังก์ชัน
       this.deleteProject(id);
     } else {
       // เมื่อผู้ใช้กด No (Cancel)
-      alert('Project Cancel Delete');
     }
   }
   deleteProject(id: number | string) {
     this.projectService.Delete(id).subscribe(
       (result) => {
-        alert('Project deleted successfully');
         this.router.navigate(['projectlist']);
         window.location.reload();
       },
