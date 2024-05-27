@@ -3,7 +3,7 @@ import ProjectWithFile from "./projectwithfile"
 
 export default class Projects {
     id = 0 
-    ownerid = 0
+    ownerId = 0
     name = ""
     detail = ""
     startDate = new Date()

@@ -5,7 +5,9 @@
   box-sizing: border-box;
 }
 
-
+.bgSignature {
+  background-color: #f0a500;
+}
 
 /* BUTTON DOWLOAD */
 
@@ -474,8 +476,8 @@ select option {
   padding: 1em 3em 2em 3em;
   margin: 0em auto;
   background-color: #fff;
-  border-radius: 4.2px;
-  box-shadow: 1px 1px 5px #f0a500;
+  border-radius: 33px;
+  box-shadow: 2px 1px 7px #000000;
 
 }
 .row {

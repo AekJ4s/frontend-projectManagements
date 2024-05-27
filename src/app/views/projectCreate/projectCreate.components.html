@@ -8,6 +8,7 @@
           [(ngModel)]="project.name"
           name="name"
           placeholder="ชื่อโครงการ"
+          matInput value="projectname"
           required
         />
         <div class="input-icon"><i class="fa fa-user"></i></div>
@@ -29,10 +30,13 @@
           <input
             type="date"
             [(ngModel)]="project.startDate"
+            [min]="minDate"
             name="startdate"
             placeholder="Date Start Project"
+            (ngModelChange)="onStartDateChange()"
             required
           />
+          
         </div>
       </div>
       <div class="col-half">
@@ -41,10 +45,15 @@
           <input
             type="date"
             [(ngModel)]="project.endDate"
+            [min]="minEndDate"
+            (ngModelChange)="onStartDateChange()"
             name="enddate"
             placeholder="Date End Project"
             required
           />
+          <div *ngIf="isDateInvalid" style="color: red;">
+            ****วันสิ้นสุดโครงการไม่สามารถกรอกเป็นวันที่มาก่อนโครงการได้
+          </div>
         </div>
       </div>
     </div>
@@ -199,7 +208,7 @@
   </form>
 </div>
 
-<button id="btn-message" class="button-message">
+<button  id="btn-message" class="button-message">
 	<div class="content-avatar">
 		<div class="status-user"></div>
 		<div class="avatar">

@@ -31,6 +31,8 @@
             [(ngModel)]="project.startDate"
             name="startdate"
             placeholder="Date Start Project"
+            (ngModelChange)="onStartDateChange()"
+
           />
         </div>
       </div>
@@ -42,7 +44,12 @@
             [(ngModel)]="project.endDate"
             name="enddate"
             placeholder="Date End Project"
+            (ngModelChange)="onStartDateChange()"
+
           />
+          <div *ngIf="isDateInvalid" style="color: red;">
+            ****วันสิ้นสุดโครงการไม่สามารถกรอกเป็นวันที่มาก่อนโครงการได้
+          </div>
         </div>
       </div>
     </div>
@@ -85,8 +92,9 @@
       </div>
       <div class=" mt-5 border-top border-3 border-dark">
       <h4 class="signature mt-3"> ไฟล์รูปภาพที่เกี่ยวข้องของโครงการ</h4>
+      <input type="file" name="image" class=" w-50  mt-2 bgSignature " (change)="uploading($event)" multiple/>
       <div *ngFor="let i of project.projectWithFiles" class="flex-wrap mt-3">
-        <ng-container *ngIf="i.isDeleted != true">
+        <ng-container *ngIf="i.isDeleted != true && i.projectId != null">
         <div  class="cardforfile">
           <div class="d-flex justify-content-between align-items-center">
             <div class="titleforfile">
@@ -162,7 +170,6 @@
           </div>
         </div>
       </ng-container>
-
       </div>
     </div>
       <div class="d-flex border-top border-3 border-dark mt-3">

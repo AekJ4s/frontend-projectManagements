@@ -1,37 +1,68 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, NgModule, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import Activity from '../../models/activity';
 import Projects from '../../models/project';
 import { ProjectService } from '../../services/Projects.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import moment from 'moment';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 @Component({
   selector: 'projectCreate',
   standalone: true,
   templateUrl: './projectCreate.components.html',
   styleUrls: ['./projectCreate.components.css'],
-  imports: [FormsModule, CommonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule,CommonModule, FormsModule, HttpClientModule],
 })
+
+
 export class ProjectCreateComponent {
   project = new Projects();
   divfile = 0;
   userId: number = 0;
   userName: string | null = '';
+  minDate: string | undefined;
+  minEndDate: string | undefined;
 
+  
   // File Part
 
   files: File[] = [];
   fileURLs: { [key: string]: string } = {};
   show_url = '';
+  isDateInvalid: boolean = false;
 
   // end File Part
   constructor(
     private projectService: ProjectService,
     private router: Router,
-    private http: HttpClient
-  ) {}
+    private http: HttpClient,
+    private _snackBar: MatSnackBar,
+  ) {
+
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth() + 1; // January is 0
+    const year = today.getFullYear();
+    
+    // Format the date to YYYY-MM-DD
+    this.minDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+    
+    
+  }
+  onStartDateChange(): void {
+    this.checkDates();
+  }
+  private checkDates(): void {
+    if (this.project.startDate && this.project.endDate) {
+      this.isDateInvalid = new Date(this.project.endDate) < new Date(this.project.startDate);
+    } else {
+      this.isDateInvalid = false;
+    }
+  }
 
   ngOnInit(): void {
     const storedUserId = localStorage.getItem('UserId');
@@ -58,6 +89,8 @@ export class ProjectCreateComponent {
     childActivity.project = this.project; // กำหนดโปรเจกต์ให้กับ Activities ใหม่
     parent.inverseActivityHeader.push(childActivity); // ยัด Activities ใหม่ให้กับตัว แม่
   }
+
+ 
 
   deleteInverseActivity(index: number, thisAct: Activity) {
     if (thisAct.activityHeader == null) {
@@ -143,21 +176,19 @@ export class ProjectCreateComponent {
       alert('No files selected');
     }
   }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
   onSubmit() {
-    console.log('eiei')
+    if ( this.isDateInvalid ==  false) {
     if (this.project != null ) {
-      if (
-        this.isLegal(
-          new Date(this.project.startDate),
-          new Date(this.project.endDate)
-        )
-      ) {
-        this.project.ownerid = this.userId;
+      
+        this.project.ownerId = this.userId;
         this.fixCircular(this.project.activities);
 
         this.projectService.Create(this.project,this.files).subscribe(
           (result) => {
-            alert('SAVE DATA SUCCESSFUL');
+            this.openSnackBar("Project Create Success","OK")
             this.router.navigate(['projectlist']);
           },
           (error) => {
@@ -166,6 +197,6 @@ export class ProjectCreateComponent {
         );
       
     }
-  }else alert('คุณยังไม่ได้สร้างโปรเจค');
+   }else alert("วันทีสิ้นสุดโครงการไม่สามารถมาก่อนวันเริ่มโครงการได้")
   }
 }

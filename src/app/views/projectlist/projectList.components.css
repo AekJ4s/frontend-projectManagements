@@ -6,6 +6,7 @@ body {
   max-width: auto;
   margin-left: auto;
   margin-right: auto;
+  
 }
 
 h2 {
@@ -566,16 +567,22 @@ body {
   text-align: center;
   display: flex;
   justify-items: center;
+  box-shadow: 5px 5px 5px #fbfbfb;
+  width: 100%;
+
 
 }
 
 .cardcode {
-  width: 75%;
+  width: 50%;
   height: auto;
   margin: 0 auto;
   background-color: #011522;
   border-radius: 35px;
   z-index: 1;
+  box-shadow: 15px 15px 15px #000000;
+  margin-bottom: 30px;
+  
  }
  
  .tools {

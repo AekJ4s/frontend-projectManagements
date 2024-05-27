@@ -35,20 +35,30 @@ export class ProjectService {
       return this.httpClient.get<Response>(`${this.baseURL}/GetBy/${id}`,options)    
     }
 
-    UpdateProjectRequest(newData : Projects) : Observable<Response> {
-      let body = JSON.stringify(newData)
+    UpdateProjectRequest(project : Projects , files: File[]) : Observable<Response> {
+      const formData: FormData = new FormData();
+      formData.append('ProjectUpdate.Id',project.id.toString())
+      formData.append('ProjectUpdate.Name', project.name);
+      formData.append('ProjectUpdate.OwnerId', project.ownerId.toString());
+      formData.append('ProjectUpdate.Detail', project.detail);
+      formData.append('ProjectUpdate.StartDate', project.startDate.toString());
+      formData.append('ProjectUpdate.EndDate',  project.endDate.toString());
+      formData.append('ProjectUpdate.Activities', JSON.stringify(project.activities));
+      formData.append('ProjectUpdate.ProjectWithFiles', JSON.stringify(project.projectWithFiles));
+      files.forEach((file) => {
+          formData.append('Files', file , file.name);
+      });
       const headers = new HttpHeaders({
         'Authorization': this.tokenType,
-        'Content-Type': 'application/json'
       });
       const options = { headers: headers };
-      return this.httpClient.put<Response>(`${this.baseURL}`,body,options)  
+      return this.httpClient.put<Response>(`${this.baseURL}/UpdateProject`,formData,options)  
     }
 
     Create(project: Projects, files: File[]): Observable<any> {
       const formData: FormData = new FormData();
       formData.append('ProjectCreate.Name', project.name);
-      formData.append('ProjectCreate.OwnerId', project.ownerid.toString());
+      formData.append('ProjectCreate.OwnerId', project.ownerId.toString());
       formData.append('ProjectCreate.Detail', project.detail);
       formData.append('ProjectCreate.StartDate', project.startDate.toString());
       formData.append('ProjectCreate.EndDate',  project.endDate.toString());

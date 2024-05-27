@@ -28,14 +28,37 @@ export class ProjectUpdateComponents {
   files : File[] = [];
   fileDetails : any []= []
   href = null ;
+  fileURLs: { [key: string]: string } = {};
+  show_url = '';
+  isDateInvalid: boolean = false;
+  minDate: string | undefined;
+  minEndDate: string | undefined;
 
   constructor(
     private projectService: ProjectService,
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe
-  ) {}
+  ) {
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth() + 1; // January is 0
+    const year = today.getFullYear();
+    
+    // Format the date to YYYY-MM-DD
+    this.minDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+  }
 
+  onStartDateChange(): void {
+    this.checkDates();
+  }
+  private checkDates(): void {
+    if (this.project.startDate && this.project.endDate) {
+      this.isDateInvalid = new Date(this.project.endDate) < new Date(this.project.startDate);
+    } else {
+      this.isDateInvalid = false;
+    }
+  }
   ngOnInit() {
     if (this.project.id != null && this.project.isDeleted != true) {
       this.route.params.subscribe((params) => {
@@ -179,9 +202,24 @@ export class ProjectUpdateComponents {
       }
     );
   }
+
+  uploading(event: any) {
+    const selectedFiles: FileList = event.target.files;
+    Array.from(selectedFiles).forEach((file) => {
+      this.files.push(file);
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.fileURLs[file.name] = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
   onSubmit() {
+    if(this.isDateInvalid == false){
     this.fixCircular(this.project.activities);
-    this.projectService.UpdateProjectRequest(this.project).subscribe(
+    console.log("data before send : " , this.project);
+    this.projectService.UpdateProjectRequest(this.project,this.files).subscribe(
       (result) => {
         if (this.project.startDate == this.project.endDate) {
           alert('ห้ามวันเริ่มและวันสิ้นสุดโครงการเป็นวันเดียวกันครับ');
@@ -194,5 +232,6 @@ export class ProjectUpdateComponents {
         console.error('Update Unsuccess', error);
       }
     );
+  }else alert("วันทีสิ้นสุดโครงการไม่สามารถมาก่อนวันเริ่มโครงการได้")
   }
 }

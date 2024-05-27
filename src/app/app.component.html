@@ -4,19 +4,13 @@
   <a class="ms-2">{{ thailandTime }}</a>
   <ul class="list">
     <li>
-      <a class="nav-link" routerLink="projectlist"
-        >ProjectList <span class="sr-only"></span
-      ></a>
+      <a class="nav-link" routerLink="projectlist">ProjectList <span class="sr-only"></span></a>
     </li>
-    <li>
-      <a class="nav-link" routerLink="signinpage"
-        >Signin <span class="sr-only"></span
-      ></a>
+    <li *ngIf="!isAuthenticated">
+      <a class="nav-link" routerLink="signinpage">Signin <span class="sr-only"></span></a>
     </li>
-    <li>
-      <a class="nav-link" routerLink="upload"
-        >UPLOAD IMAGE<span class="sr-only"></span
-      ></a>
+    <li *ngIf="isAuthenticated">
+      <a class="nav-link" (click)="signout()">Signout <span class="sr-only"></span></a>
     </li>
   </ul>
   <button class="search">Search</button>
@@ -25,5 +19,3 @@
 <div style="margin-top: 100px">
   <router-outlet></router-outlet>
 </div>
-
-
