@@ -30,7 +30,7 @@ export class ProjectUpdateComponents {
   isDateInvalid: boolean = false;
   minDate: string | undefined;
   minEndDate: string | undefined;
-
+  totalFile : number = this.project.projectWithFiles.length;
   constructor(
     private projectService: ProjectService,
     private route: ActivatedRoute,
@@ -94,8 +94,8 @@ export class ProjectUpdateComponents {
                 'Asia/Bangkok'
               ),
             };
-            
-            console.log(this.project);
+            this.totalFile = data.projectWithFiles.length;
+            console.log("TOTAL : " + this.totalFile)
           } else {
             console.error('Data is not available');
           }
@@ -139,6 +139,8 @@ export class ProjectUpdateComponents {
 
   deleteProjectWithFile(F : ProjectWithFile){
     F.isDeleted = true;
+    this.totalFile = this.totalFile - 1 ;
+    console.log( " TOTAL FILES : " ,this.totalFile)
   }
   getColSpanForLevel(level: number): number {
     // กำหนดจำนวนคอลัมน์ที่ต้องการให้กับแต่ละระดับของกิจกรรม
@@ -187,7 +189,6 @@ export class ProjectUpdateComponents {
       window.URL.revokeObjectURL(url);
       a.remove();
     });
-    this.router.navigate([`projects/GetBy/${id}`]);
 
   }
 
@@ -226,8 +227,8 @@ export class ProjectUpdateComponents {
         alert('Update Successfully')
         this.router.navigate(['projectlist']);
       },
-      (error) => {
-        console.error('Update Unsuccess', error);
+      (error:any) => {
+        alert(error.error.message);
       }
     );
   }else alert("วันทีสิ้นสุดโครงการไม่สามารถมาก่อนวันเริ่มโครงการได้")

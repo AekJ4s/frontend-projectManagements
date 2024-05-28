@@ -36,6 +36,8 @@ h2 {
     box-shadow: 0px 0px 9px 0px rgba(255, 255, 255, 0.1);
     color: white ;
     font-size: 16px;
+
+   
   }
   .col-1 {
     
@@ -43,6 +45,9 @@ h2 {
     flex-basis: 14%;
     text-align: center;
     justify-content: center;
+    /*margin: auto;*/
+    align-items: center;
+
   }
   .col-2 {
     flex-basis: 40%;

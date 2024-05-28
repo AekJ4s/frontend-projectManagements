@@ -34,7 +34,7 @@ export class ProjectListComponent implements OnInit {
             ...project,
             createDate: this.datePipe.transform(
               new Date(project.createDate),
-              'shortDate',
+              'mediumDate',
               'Asia/Bangkok'
             ),
             endDate: this.datePipe.transform(

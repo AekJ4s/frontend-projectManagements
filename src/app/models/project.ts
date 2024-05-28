@@ -5,7 +5,7 @@ export default class Projects {
     id = 0 
     ownerId = 0
     name = ""
-    detail = ""
+    detail : string | null = ""
     startDate = new Date()
     endDate = new Date()
     createDate = new Date()

@@ -10,6 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import Response from "../../models/response";
 @Component({
   selector: 'projectCreate',
   standalone: true,
@@ -188,11 +189,11 @@ export class ProjectCreateComponent {
 
         this.projectService.Create(this.project,this.files).subscribe(
           (result) => {
-            this.openSnackBar("Project Create Success","OK")
+            alert(result.message);
             this.router.navigate(['projectlist']);
           },
-          (error) => {
-            console.error(error);
+          (error:{error:Response}) => {
+            alert(error.error.message);
           }
         );
       

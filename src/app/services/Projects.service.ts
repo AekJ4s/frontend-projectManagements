@@ -40,6 +40,10 @@ export class ProjectService {
       formData.append('ProjectUpdate.Id',project.id.toString())
       formData.append('ProjectUpdate.Name', project.name);
       formData.append('ProjectUpdate.OwnerId', project.ownerId.toString());
+
+      if(project.detail == null){
+        project.detail = ""
+      }
       formData.append('ProjectUpdate.Detail', project.detail);
       formData.append('ProjectUpdate.StartDate', project.startDate.toString());
       formData.append('ProjectUpdate.EndDate',  project.endDate.toString());
@@ -59,6 +63,11 @@ export class ProjectService {
       const formData: FormData = new FormData();
       formData.append('ProjectCreate.Name', project.name);
       formData.append('ProjectCreate.OwnerId', project.ownerId.toString());
+
+      if(project.detail == null){
+        project.detail = ""
+      }
+
       formData.append('ProjectCreate.Detail', project.detail);
       formData.append('ProjectCreate.StartDate', project.startDate.toString());
       formData.append('ProjectCreate.EndDate',  project.endDate.toString());
