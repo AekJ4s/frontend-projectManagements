@@ -1,61 +1,54 @@
-import { Component } from '@angular/core';
-import { RouterModule, RouterOutlet, Router } from '@angular/router';
+
+
+
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { AuthService } from './services/Auth.service';
+import { SigninPageComponent } from './views/signinPage/signinPage.components';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
-import { SigninPageComponent } from './views/signinPage/signinPage.components';
-import { ProjectListComponent } from './views/projectlist/projectList.components';
-import { UploadFileComponent } from './views/uploadfile/uploadFile.components';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
+  standalone:true,
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
   imports: [
-    UploadFileComponent,
-    ProjectListComponent,
     SigninPageComponent,
     CommonModule,
     RouterModule,
     FormsModule,
-    CommonModule,
-    RouterOutlet
+    RouterOutlet,
   ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Project Management Angular';
   timeupdate = Date();
   timenow = new Date();
   thailandTime: string = this.timenow.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' });
-  
+  checkLogin: boolean = false;
   isAuthenticated = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
-  checkAuthentication() {
-    // Logic to check if the user is authenticated
-    // For example, check a token in localStorage or a variable
-    this.isAuthenticated = !!localStorage.getItem('authToken');
+  ngOnInit() {
+    this.authService.isAuthenticated().subscribe(authStatus => {
+      this.isAuthenticated = authStatus;
+      this.checkLogin = authStatus;
+      console.log(this.isAuthenticated);
+      if (this.isAuthenticated) {
+        this.router.navigate(['/projectlist']);
+      } else {
+        this.router.navigate(['/signinpage']);
+      }
+    });
+  }
+
+  takeToken() {
+    this.authService.login();
   }
 
   signout() {
-    // Logic to handle signout
-    localStorage.removeItem('authToken');
-    this.isAuthenticated = false;
-    this.router.navigate(['/signinpage']);
-  }
-
-  ngOnInit() {
-    this.checkAuthentication();
-  }
-}
-
-@Injectable()
-export class ApiInterceptor implements HttpInterceptor {
-  intercept(request: HttpRequest<any>, next: HttpHandler) {
-    console.log('API was called:', request.url);
-    return next.handle(request);
+    this.authService.logout();
   }
 }

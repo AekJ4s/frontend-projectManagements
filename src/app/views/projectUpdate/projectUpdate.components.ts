@@ -5,10 +5,7 @@ import Activity from '../../models/activity';
 import Projects from '../../models/project';
 import { ProjectService } from '../../services/Projects.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ActivityService } from '../../services/Activity.service';
 import { ProjectListComponent } from '../projectlist/projectList.components';
-import mFile from '../../models/file';
-import { Observable } from 'rxjs';
 import ProjectWithFile from '../../models/projectwithfile';
 
 @Component({
@@ -59,6 +56,11 @@ export class ProjectUpdateComponents {
       this.isDateInvalid = false;
     }
   }
+
+  deleteSelect(index: number) {
+    this.files.splice(index, 1); // ลบแค่ตัวปัจจุบัน
+  }
+  
   ngOnInit() {
     if (this.project.id != null && this.project.isDeleted != true) {
       this.route.params.subscribe((params) => {
@@ -221,10 +223,6 @@ export class ProjectUpdateComponents {
     console.log("data before send : " , this.project);
     this.projectService.UpdateProjectRequest(this.project,this.files).subscribe(
       (result) => {
-        if (this.project.startDate == this.project.endDate) {
-          alert('ห้ามวันเริ่มและวันสิ้นสุดโครงการเป็นวันเดียวกันครับ');
-          console.log("After Submit" + result.data)
-        } else 
         alert('Update Successfully')
         this.router.navigate(['projectlist']);
       },

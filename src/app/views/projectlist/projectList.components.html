@@ -29,19 +29,13 @@
           <div class="col col-1 text-center">ACTION</div>
         </li>
         <ng-container *ngFor="let data of Allprojects ; let i = index">
-          <ng-container *ngIf="isLate(data.endDate);else dataRow">
+          <ng-container>
             <li class="table-row">
               <div class="col col-1 text-center">{{i + 1}}</div>
               <div class="col col-1 text-center">{{data.name}}</div>
               <div class="col col-1 text-center">{{data.detail}}</div>
               <div class="col col-1 text-center">{{data.startDate}}</div>
-              <div>
-                <button class="btnLate col col-1 text-center">
-                  <i class="animation"></i>LATE {{data.endDate}}<i
-                    class="animation"
-                  ></i>
-                </button>
-              </div>
+              <div class="col col-1 text-center">{{data.endDate}}</div>
               <div class="col col-1 text-center">{{data.createDate }}</div>
               <div class="col col-1">
                 <div class="d-flex gap-2 justify-content-center">

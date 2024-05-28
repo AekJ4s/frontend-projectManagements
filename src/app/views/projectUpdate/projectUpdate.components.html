@@ -8,6 +8,7 @@
           [(ngModel)]="project.name"
           name="name"
           placeholder="ชื่อโครงการ"
+          required
         />
         <div class="input-icon"><i class="fa fa-user"></i></div>
       </div>
@@ -32,7 +33,7 @@
             name="startdate"
             placeholder="Date Start Project"
             (ngModelChange)="onStartDateChange()"
-
+            required
           />
         </div>
       </div>
@@ -45,15 +46,15 @@
             name="enddate"
             placeholder="Date End Project"
             (ngModelChange)="onStartDateChange()"
-
+            required
           />
-          <div *ngIf="isDateInvalid" style="color: red;">
+          <div *ngIf="isDateInvalid" style="color: red">
             ****วันสิ้นสุดโครงการไม่สามารถกรอกเป็นวันที่มาก่อนโครงการได้
           </div>
         </div>
       </div>
     </div>
-    <div class="row mt-5 border-top border-3 border-dark ">
+    <div class="row mt-5 border-top border-3 border-dark">
       <h4 class="mt-3">กิจกรรมโครงการ</h4>
       <div class="container">
         <div class="row">
@@ -90,33 +91,107 @@
           </div>
         </div>
       </div>
-      <div class=" mt-5 border-top border-3 border-dark">
-      <h4 class="signature mt-3"> ไฟล์รูปภาพที่เกี่ยวข้องของโครงการ</h4>
-      <input type="file" name="image" class=" w-50  mt-2 bgSignature " (change)="uploading($event)" multiple/>
-      <div *ngFor="let i of project.projectWithFiles" class="flex-wrap mt-3">
-        <ng-container *ngIf="i.isDeleted != true && i.projectId != null">
-        <div  class="cardforfile">
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="titleforfile">
-              <p class="titleforfile-text">| {{i.file?.fileName}} | </p>
-            </div>
-            <div class=" d-flex">
-              <button class="BtnDownload" type="button" (click)="onDownload(i.fileId.toString(),i.file?.fileName)" download >
-                <svg
-                  class="svgIconDownload"
-                  viewBox="0 0 384 512"
-                  height="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                  ></path>
-                </svg>
-                <span class="icon2Download"></span>
-                <span class="tooltipDownload" >โหลดรูปภาพ</span>
-              </button>
-              <button
-                    class="bin-button ms-2" type="button"
+      <div class="mt-5 border-top border-3 border-dark">
+        <label for="file" class="file-upload-label mt-5 mb-5">
+          <div class="file-upload-design">
+            <svg viewBox="0 0 640 512" height="1em">
+              <path
+                d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39V392c0 13.3 10.7 24 24 24s24-10.7 24-24V257.9l39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"
+              ></path>
+            </svg>
+            <span class="browse-button">นำเข้าไฟล์</span>
+          </div>
+          <input id="file" type="file" (change)="uploading($event)" multiple/>
+        </label>
+        <div class="d-flex card w-25 mt-3">
+          <div *ngFor="let item of files; let i = index" class="d-flex mt-1 mb-1">
+            <p class="ms-3 mt-3">{{i+1}}</p>
+            <p class="ms-3 mt-3">{{item.name}}</p>
+            <div class="align-items-end">
+            <button
+                    class="bin-button ms-3 "
+                    (click)="deleteSelect(i)"
+                  >
+                    <svg
+                      class="bin-top"
+                      viewBox="0 0 39 7"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <line
+                        y1="5"
+                        x2="39"
+                        y2="5"
+                        stroke="white"
+                        stroke-width="4"
+                      ></line>
+                      <line
+                        x1="12"
+                        y1="1.5"
+                        x2="26.0357"
+                        y2="1.5"
+                        stroke="white"
+                        stroke-width="3"
+                      ></line>
+                    </svg>
+                    <svg
+                      class="bin-bottom"
+                      viewBox="0 0 33 39"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <mask id="path-1-inside-1_8_19" fill="white">
+                        <path
+                          d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+                        ></path>
+                      </mask>
+                      3
+                      <path
+                        d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+                        fill="white"
+                        mask="url(#path-1-inside-1_8_19)"
+                      ></path>
+                      <path
+                        d="M12 6L12 29"
+                        stroke="white"
+                        stroke-width="4"
+                      ></path>
+                      <path d="M21 6V29" stroke="white" stroke-width="4"></path>
+                    </svg>
+                  </button>
+                </div>
+          </div>
+        </div>
+        <div *ngFor="let i of project.projectWithFiles" class="flex-wrap mt-3">
+          <ng-container *ngIf="i.isDeleted != true && i.projectId != null">
+            <div class="cardforfile">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="titleforfile">
+                  <p class="titleforfile-text">| {{i.file?.fileName}} |</p>
+                </div>
+                <div class="d-flex">
+                  <button
+                    class="BtnDownload"
+                    type="button"
+                    (click)="onDownload(i.fileId.toString(),i.file?.fileName)"
+                    download
+                  >
+                    <svg
+                      class="svgIconDownload"
+                      viewBox="0 0 384 512"
+                      height="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                      ></path>
+                    </svg>
+                    <span class="icon2Download"></span>
+                    <span class="tooltipDownload">โหลดรูปภาพ</span>
+                  </button>
+                  <button
+                    class="bin-button ms-2"
+                    type="button"
                     (click)="deleteProjectWithFile(i)"
                   >
                     <svg
@@ -166,12 +241,12 @@
                       <path d="M21 6V29" stroke="white" stroke-width="4"></path>
                     </svg>
                   </button>
+                </div>
+              </div>
             </div>
-          </div>
+          </ng-container>
         </div>
-      </ng-container>
       </div>
-    </div>
       <div class="d-flex border-top border-3 border-dark mt-3">
         <button type="submit" class="button mt-3">
           บันทึกข้อมูลโครงการ

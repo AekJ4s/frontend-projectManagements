@@ -1,21 +1,29 @@
-<nav class="mask">
-  <a routerLink="#"></a>
-  <a class="mytheme ms-3"> DATE TIME NOW | </a>
-  <a class="ms-2">{{ thailandTime }}</a>
-  <ul class="list">
-    <li>
-      <a class="nav-link" routerLink="projectlist">ProjectList <span class="sr-only"></span></a>
-    </li>
-    <li *ngIf="!isAuthenticated">
-      <a class="nav-link" routerLink="signinpage">Signin <span class="sr-only"></span></a>
-    </li>
-    <li *ngIf="isAuthenticated">
-      <a class="nav-link" (click)="signout()">Signout <span class="sr-only"></span></a>
-    </li>
-  </ul>
-  <button class="search">Search</button>
-  <button class="menu">Menu</button>
-</nav>
-<div style="margin-top: 100px">
-  <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>
+
+<ng-container *ngIf="isAuthenticated == true">
+  <nav class="mask">
+    <a routerLink="#"></a>
+    <a class="mytheme ms-3"> DATE TIME NOW | </a>
+    <a class="ms-2">{{ thailandTime }}</a>
+    <ul class="list">
+    <button class="Btn Btn-colour ms-3" type="button" routerLink="projectlist" >
+      <div class="sign">
+        <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+          <path d="M8 6.00067L21 6.00139M8 12.0007L21 12.0015M8 18.0007L21 18.0015M3.5 6H3.51M3.5 12H3.51M3.5 18H3.51M4 6C4 6.27614 3.77614 6.5 3.5 6.5C3.22386 6.5 3 6.27614 3 6C3 5.72386 3.22386 5.5 3.5 5.5C3.77614 5.5 4 5.72386 4 6ZM4 12C4 12.2761 3.77614 12.5 3.5 12.5C3.22386 12.5 3 12.2761 3 12C3 11.7239 3.22386 11.5 3.5 11.5C3.77614 11.5 4 11.7239 4 12ZM4 18C4 18.2761 3.77614 18.5 3.5 18.5C3.22386 18.5 3 18.2761 3 18C3 17.7239 3.22386 17.5 3.5 17.5C3.77614 17.5 4 17.7239 4 18Z" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+      </div>
+      <div class="text">LIST</div>
+    </button>
+      <button class="Btn ms-3" type="button" (click)="signout()">
+        <div class="sign">
+          <svg viewBox="0 0 512 512">
+            <path
+              d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
+            ></path>
+          </svg>
+        </div>
+        <div class="text">Logout</div>
+      </button>
+    </ul>
+  </nav>
+</ng-container>

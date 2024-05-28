@@ -10,5 +10,4 @@ export const routes: Routes = [
     {path:'projectlist',component: ProjectListComponent},
     {path:'signinpage',component: SigninPageComponent},
     {path:'upload',component: UploadFileComponent},
-    
 ];

@@ -39,12 +39,12 @@ export class ProjectListComponent implements OnInit {
             ),
             endDate: this.datePipe.transform(
               endDate,
-              'shortDate',
+              'mediumDate',
               'Asia/Bangkok'
             ),
             startDate: this.datePipe.transform(
               new Date(project.startDate),
-              'shortDate',
+              'mediumDate',
               'Asia/Bangkok'
             ),
             updateDate: this.datePipe.transform(
@@ -58,6 +58,8 @@ export class ProjectListComponent implements OnInit {
       },
       (error) => {
         console.error(error);
+        this.router.navigate(['signinpage']);
+
       }
     );
   }
@@ -86,8 +88,5 @@ export class ProjectListComponent implements OnInit {
     );
   }
 
-  isLate(endDateString: Date): boolean {
-    const endDate = new Date(endDateString);
-    return this.dateNow > endDate;
-}
+  
 }

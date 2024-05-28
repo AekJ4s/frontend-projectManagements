@@ -1,37 +1,79 @@
-<div class="d-flex justify-content-center">
-  <div class="form-container">
-    <form class="form" (submit)="onSubmit()">
-      <div class="form-group">
-        <label for="username">USERNAME</label>
-        <input
-          type="text"
-          [(ngModel)]="loginby.username"
-          name="username"
-          id="username"
-          required
-        />
+<html lang="en">
+  <head>
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+      }
+      .container {
+        display: grid;
+        place-items: center;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <div class="d-flex justify-content-center">
+          <form class="form" (submit)="onSubmit()">
+            <div class="form-title"><span>ลงชื่อเข้าใช้</span></div>
+            <div class="input-container">
+              <input
+                type="text"
+                [(ngModel)]="loginby.username"
+                name="username"
+                id="username"
+                required
+              />
+              <span> </span>
+            </div>
+
+            <section class="bg-stars">
+              <span class="star"></span>
+              <span class="star"></span>
+              <span class="star"></span>
+              <span class="star"></span>
+            </section>
+
+            <div class="input-container">
+              <input
+                type="password"
+                [(ngModel)]="loginby.password"
+                name="password"
+                id="password"
+                required
+              />
+            </div>
+            <button *ngIf="onsub==false" type="button" class="submit" (click)="onsubCheck()">
+              <span class="sign-text">ลงชื่อเข้าใช้</span>
+            </button>
+            <!-- <ng-container *ngIf="onsub == false">
+              <p class="signup-link">
+                ยังไม่มีบัญชี ?
+                <a href="" class="up text-warning">สมัครเลย!</a>
+              </p>
+            </ng-container> -->
+            <ng-container *ngIf="onsub == true">
+              <div class="input-container">
+                <input
+                  type="password"
+                  [(ngModel)]="loginby.pin"
+                  name="pin"
+                  id="pin"
+                  placeholder="Key Your Pin"
+                  required
+                />
+              </div>
+            <span class="up text-warning justify-content-center d-flex" *ngIf="seterr == true;" > ชื่อหรือรหัสผ่านไม่ถูกต้อง </span>
+              <button type="submit" class="submit" (click)="onSubmit()">
+                <span class="sign-text">เข้าใช้</span>
+              </button>
+            </ng-container>
+          </form>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="password">PASSWORD</label>
-        <input
-          type="password"
-          [(ngModel)]="loginby.password"
-          name="password"
-          id="password"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="pin">PIN 4 DIGITS</label>
-        <input
-          type="text"
-          [(ngModel)]="loginby.pin"
-          name="pin"
-          id="pin"
-          required
-        />
-      </div>
-      <button type="submit" class="form-login-btn">LOGIN</button>
-    </form>
-  </div>
-</div>
+    </div>
+  </body>
+</html>
