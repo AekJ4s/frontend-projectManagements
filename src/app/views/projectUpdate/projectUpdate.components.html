@@ -54,7 +54,7 @@
         </div>
       </div>
     </div>
-    <div class="row mt-5 border-top border-3 border-dark">
+    <div class="row mt-3 border-top border-3">
       <h4 class="mt-3">กิจกรรมโครงการ</h4>
       <div class="containerAct">
         <div class="row">
@@ -91,8 +91,10 @@
           </div>
         </div>
       </div>
-      <div class="mt-5 border-top border-3 border-dark">
-        <label for="file" class="file-upload-label mt-5 mb-5">
+      <div class="mt-5 border-top border-3 ">
+        <h4 class="mt-3"> อัพโหลดไฟล์ที่เกี่ยวข้องกับโปรเจค</h4>
+
+        <label for="file" class="file-upload-label">
           <div class="file-upload-design">
             <svg viewBox="0 0 640 512" height="1em">
               <path
@@ -104,80 +106,14 @@
           <input id="file" type="file" (change)="uploading($event)" multiple/>
         </label>
        
-        <!-- <div class="d-flex mt-3">
-          <div *ngFor="let file of files; let i = index" class="d-flex mt-1 mb-1">
-            <div class="cardforfile">
-              <div class="d-flex  align-items-center">
-                <div class="titleforfile">
-                  <p class="titleforfile-text">{{i+1}} | {{file.name}} |</p>
-                </div>
-               
-                <div class="d-flex">
-                  <button
-                    class="bin-button ms-2"
-                    type="button"
-                    (click)="deleteSelect(i)"
-                  >
-                    <svg
-                      class="bin-top"
-                      viewBox="0 0 39 7"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <line
-                        y1="5"
-                        x2="39"
-                        y2="5"
-                        stroke="white"
-                        stroke-width="4"
-                      ></line>
-                      <line
-                        x1="12"
-                        y1="1.5"
-                        x2="26.0357"
-                        y2="1.5"
-                        stroke="white"
-                        stroke-width="3"
-                      ></line>
-                    </svg>
-                    <svg
-                      class="bin-bottom"
-                      viewBox="0 0 33 39"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <mask id="path-1-inside-1_8_19" fill="white">
-                        <path
-                          d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
-                        ></path>
-                      </mask>
-                      3
-                      <path
-                        d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
-                        fill="white"
-                        mask="url(#path-1-inside-1_8_19)"
-                      ></path>
-                      <path
-                        d="M12 6L12 29"
-                        stroke="white"
-                        stroke-width="4"
-                      ></path>
-                      <path d="M21 6V29" stroke="white" stroke-width="4"></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <div *ngFor="let file of project.projectWithFiles , let i = index  "  class="flex-wrap mt-3">
+        <div *ngFor="let file of projecFile , let i = index" >
           <ng-container *ngIf="file.isDeleted != true && file.projectId != null  " >
             
             <div class="cardforfile" >
               <div class="d-flex justify-content-between align-items-center">
                 
                 <div class="titleforfile">
-                  <p class="titleforfile-text">{{totalFile*0+i+1}} | {{file.file?.fileName}} |</p>
+                  <p class="titleforfile-text">{{i+1}} | {{file.file?.fileName}} |</p>
                 </div>
                
                 <div class="d-flex">
@@ -262,7 +198,8 @@
             <div class="cardforfile">
               <div class="d-flex justify-content-between align-items-center">
                 <div class="titleforfile">
-                  <p class="titleforfile-text">{{totalFile+i+1}} | {{file.name}} |</p>
+                  <p class="titleforfile-text">{{projecFile.length+i+1}} | {{file.name}} | </p>
+                  <h5 class="buttonNewfile">NEW File !</h5> 
                 </div>
                
                 <div class="d-flex">

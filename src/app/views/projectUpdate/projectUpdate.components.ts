@@ -7,6 +7,7 @@ import { ProjectService } from '../../services/Projects.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectListComponent } from '../projectlist/projectList.components';
 import ProjectWithFile from '../../models/projectwithfile';
+import mFile from '../../models/file';
 
 @Component({
   selector: 'projectUpdate',
@@ -30,7 +31,9 @@ export class ProjectUpdateComponents {
   isDateInvalid: boolean = false;
   minDate: string | undefined;
   minEndDate: string | undefined;
-  totalFile : number = this.project.projectWithFiles.length;
+  projecFile : ProjectWithFile[] = this.project.projectWithFiles
+
+  
   constructor(
     private projectService: ProjectService,
     private route: ActivatedRoute,
@@ -73,6 +76,7 @@ export class ProjectUpdateComponents {
           if (data!= null) {
             this.project = {
               ...data,
+
               createDate: this.datePipe.transform(
                 new Date(data.createDate),
                 'yyyy-MM-dd',
@@ -94,8 +98,9 @@ export class ProjectUpdateComponents {
                 'Asia/Bangkok'
               ),
             };
-            this.totalFile = data.projectWithFiles.length;
-            console.log("TOTAL : " + this.totalFile)
+            this.projecFile = data.projectWithFiles
+            this.projecFile = this.project.projectWithFiles.filter(data => data.isDeleted == false)
+            
           } else {
             console.error('Data is not available');
           }
@@ -139,8 +144,15 @@ export class ProjectUpdateComponents {
 
   deleteProjectWithFile(F : ProjectWithFile){
     F.isDeleted = true;
-    this.totalFile = this.totalFile - 1 ;
-    console.log( " TOTAL FILES : " ,this.totalFile)
+    this.projecFile = this.project.projectWithFiles.filter(data => data.isDeleted == false)
+    this.deleteFileInProject(F.id)
+    
+  }
+
+  deleteFileInProject(id : number){
+    var data =  this.project.projectWithFiles.find(f => f.id === id)
+    data?.isDeleted == true ;
+    return data
   }
   getColSpanForLevel(level: number): number {
     // กำหนดจำนวนคอลัมน์ที่ต้องการให้กับแต่ละระดับของกิจกรรม
@@ -219,6 +231,7 @@ export class ProjectUpdateComponents {
   }
 
   onSubmit() {
+     
     if(this.isDateInvalid == false){
     this.fixCircular(this.project.activities);
     console.log("data before send : " , this.project);
